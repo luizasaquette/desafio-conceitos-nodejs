@@ -81,15 +81,10 @@ app.put("/todos/:id", (request, response) => {
     return response.status(404).json({ error: "Todo not found!" });
   }
 
-  const todoIndex = user.todos.indexOf(todo);
+  todo.title = title;
+  todo.deadline = new Date(deadline);
 
-  user.todos[todoIndex] = {
-    ...todo,
-    title,
-    deadline: new Date(deadline)
-  }
-
-  return response.status(200).json(user.todos[todoIndex]);
+  return response.status(200).json(todo);
 });
 
 app.patch("/todos/:id/done", (request, response) => {
@@ -102,14 +97,9 @@ app.patch("/todos/:id/done", (request, response) => {
     return response.status(404).json({ error: "Todo not found!" });
   }
 
-  const todoIndex = user.todos.indexOf(todo);
+  todo.done = true;
 
-  user.todos[todoIndex] = {
-    ...todo,
-    done: true
-  }
-
-  return response.status(200).json(user.todos[todoIndex]);
+  return response.status(200).json(todo);
 });
 
 app.delete("/todos/:id", (request, response) => {
